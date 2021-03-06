@@ -15,20 +15,12 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        let colors: [UIColor] = [.red, .blue, .purple]
-        let randomValue = Int.random(in: 20...40)
-        let color = colors[randomValue % 3]
-        let shape = SKSpriteNode(color: color, size: CGSize(width: randomValue, height: randomValue))
+        let balls: [String] = ["ballBlue", "ballRed", "ballYellow"]
+        let shape = SKSpriteNode(imageNamed: balls.randomElement()!)
         shape.position = location
-        
-        if randomValue % 2 == 0 {
-            shape.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: randomValue, height: randomValue))
-        } else {
-            shape.physicsBody = SKPhysicsBody(circleOfRadius: CGFloat(randomValue))
-        }
-        
-        
-        
+        shape.physicsBody = SKPhysicsBody(circleOfRadius: shape.frame.width / 2)
+        shape.physicsBody?.allowsRotation = false
+        shape.physicsBody?.mass = 10
         addChild(shape)
     }
 }
